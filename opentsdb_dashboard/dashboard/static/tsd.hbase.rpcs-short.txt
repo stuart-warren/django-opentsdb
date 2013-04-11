@@ -1,0 +1,9 @@
+tsd.hbase.rpcs 1365436826 2603.5333333333333 host=hotcpc9882 type=put
+tsd.hbase.rpcs 1365436841 4129.0 host=hotcpc9882 type=put
+tsd.hbase.rpcs 1365436856 2008.9333333333334 host=hotcpc9882 type=put
+tsd.hbase.rpcs 1365436871 2046.8666666666666 host=hotcpc9882 type=put
+tsd.hbase.rpcs 1365436886 345.3333333333333 host=hotcpc9882 type=put
+tsd.hbase.rpcs 1365436901 2056.6 host=hotcpc9882 type=put
+tsd.hbase.rpcs 1365436916 4365.866666666667 host=hotcpc9882 type=put
+tsd.hbase.rpcs 1365436931 2079.6666666666665 host=hotcpc9882 type=put
+

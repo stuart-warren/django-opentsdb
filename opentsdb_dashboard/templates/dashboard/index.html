@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<link href="/static/novus-nvd3-f74b4de/src/nv.d3.css" rel="stylesheet" type="text/css">
+
+<style>
+
+body {
+  overflow-y:scroll;
+}
+
+text {
+  font: 12px sans-serif;
+}
+
+svg {
+  display: block;
+}
+
+#chart1 svg {
+  height: 500px;
+  min-width: 100px;
+  min-height: 100px;
+/*
+  margin: 50px;
+  Minimum height and width is a good idea to prevent negative SVG dimensions...
+  For example width should be =< margin.left + margin.right + 1,
+  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
+*/
+}
+
+</style>
+<body>
+
+  <div id="chart">
+    <svg style="height: 500px;"></svg>
+  </div>
+
+<script src="/static/novus-nvd3-f74b4de/lib/d3.v2.js"></script>
+<script src="/static/novus-nvd3-f74b4de/nv.d3.js"></script>
+<script src="/static/novus-nvd3-f74b4de/src/tooltip.js"></script>
+<script src="/static/novus-nvd3-f74b4de/src/utils.js"></script>
+<script src="/static/novus-nvd3-f74b4de/src/models/legend.js"></script>
+<script src="/static/novus-nvd3-f74b4de/src/models/axis.js"></script>
+<script src="/static/novus-nvd3-f74b4de/src/models/scatter.js"></script>
+<script src="/static/novus-nvd3-f74b4de/src/models/line.js"></script>
+<script src="/static/novus-nvd3-f74b4de/src/models/lineWithFocusChart.js"></script>
+<script>
+
+
+nv.addGraph(function() {
+
+  var chart = nv.models.lineWithFocusChart();
+  var data;
+  
+  d3.json("/dashboard/translate/nvd3.json", function(json, error) {
+    if (error) return console.warn(error);
+    data = json;
+    
+    chart.xAxis
+        .tickFormat(function(d) { return d3.time.format('%Y-%m-%d/n%H:%M:%S')(new Date(d *1000)); })
+	  chart.x2Axis
+	  		.rotateLabels(-45)
+	      .tickFormat(function(d) { return d3.time.format('%Y-%m-%d %H:%M:%S')(new Date(d *1000)); })
+
+	  chart.yAxis
+	      .tickFormat(d3.format(',.2f'));
+	  chart.y2Axis
+	      .tickFormat(d3.format(',.2f'));
+
+    d3.select('#chart svg')
+	      .datum(data)
+	    .transition().duration(500)
+	      .call(chart);
+
+  });	
+
+  
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+
+</script>
+
