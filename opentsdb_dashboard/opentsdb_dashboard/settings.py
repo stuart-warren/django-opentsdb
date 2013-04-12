@@ -107,6 +107,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     "/Users/stuart/Workspace/Python/Django/django-opentsdb/opentsdb_dashboard/templates",
+    "/home/stuart/Workspace/git/django-opentsdb/opentsdb_dashboard/templates",
 )
 
 INSTALLED_APPS = (

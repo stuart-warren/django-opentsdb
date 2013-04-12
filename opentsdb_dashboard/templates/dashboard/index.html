@@ -21,6 +21,7 @@ svg {
   height: 500px;
   min-width: 100px;
   min-height: 100px;
+  padding: 50px;
 /*
   margin: 50px;
   Minimum height and width is a good idea to prevent negative SVG dimensions...
@@ -50,19 +51,27 @@ svg {
 
 nv.addGraph(function() {
 
+  var margin = {top: 30, right: 30, bottom: 100, left: 60};
+  var margin2 = {top: 100, right: 30, bottom: 100, left: 60};
+  // TODO: Use the above
   var chart = nv.models.lineWithFocusChart();
   var data;
+  // TODO: Use dynamic date formats depending on range of data
+  var dateFormat = '%a %d %H:%M';
   
   d3.json("/dashboard/translate/nvd3.json", function(json, error) {
     if (error) return console.warn(error);
     data = json;
     
     chart.xAxis
-        .tickFormat(function(d) { return d3.time.format('%Y-%m-%d/n%H:%M:%S')(new Date(d *1000)); })
-	  chart.x2Axis
-	  		.rotateLabels(-45)
-	      .tickFormat(function(d) { return d3.time.format('%Y-%m-%d %H:%M:%S')(new Date(d *1000)); })
+        .rotateLabels(-8)
+        .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
 
+	  chart.x2Axis
+        .rotateLabels(-8)
+	      .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
+
+    // TODO: Optionally enable log scales
 	  chart.yAxis
 	      .tickFormat(d3.format(',.2f'));
 	  chart.y2Axis
