@@ -52,13 +52,12 @@ svg {
 
 nv.addGraph(function() {
 
-  var margin = {top: 30, right: 30, bottom: 100, left: 60};
-  var margin2 = {top: 100, right: 30, bottom: 100, left: 60};
-  // TODO: Use the above
-  var chart = nv.models.lineWithFocusChart();
+  var chart = nv.models.lineWithFocusChart()
+                .margin({top: 30, right: 30, bottom: 50, left: 60})
+                .margin2({top: 0, right: 30, bottom: 40, left: 60});
   var data;
-  // TODO: Use dynamic date formats depending on range of data
-  var dateFormat = '%a %d %H:%M';
+  // TODO: Use dynamic date formats depending on range of data?
+  var dateFormat = '%a %d %b %Y %H:%M:%S';
   
   d3.json("/dashboard/translate/nvd3.json", function(json, error) {
     if (error) return console.warn(error);
