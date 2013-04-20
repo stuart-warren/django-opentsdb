@@ -6,8 +6,8 @@ from django.utils import simplejson
 
 def nvd3(request):
     # generate nvd3 json here
-    url = 'http://hotcpc9882:4242/q?start=2013/04/10-17:22:55&ignore=2&m=sum:10m-avg:rate:tsd.hbase.rpcs%7Bhost=*,type=*%7D&o=&m=sum:10m-avg:rate:tsd.rpc.received%7Bhost=*,type=*%7D&o=axis%20x1y2&yrange=%5B1:%5D&y2range=%5B1:%5D&ylog&y2log&key=out%20right%20top%20box&wxh=1627x758&ascii'
-    #url = 'http://localhost:8000/static/tsd.hbase.rpcs-short.txt'
+    #url = 'http://hotcpc9882:4242/q?start=2013/04/10-17:22:55&ignore=2&m=sum:10m-avg:rate:tsd.hbase.rpcs%7Bhost=*,type=*%7D&o=&m=sum:10m-avg:rate:tsd.rpc.received%7Bhost=*,type=*%7D&o=axis%20x1y2&yrange=%5B1:%5D&y2range=%5B1:%5D&ylog&y2log&key=out%20right%20top%20box&wxh=1627x758&ascii'
+    url = 'http://localhost:8000/static/tsd.hbase.rpcs-short.txt'
 
     # spliturl = urlparse.urlsplit(url)
     # parsedquery = urlparse.parse_qs(spliturl[3])
