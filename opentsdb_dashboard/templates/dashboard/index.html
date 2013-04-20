@@ -58,6 +58,8 @@ nv.addGraph(function() {
   var data;
   // TODO: Use dynamic date formats depending on range of data?
   var dateFormat = '%a %d %b %Y %H:%M:%S';
+  // Enable for log scale
+  var logyAxis = false
   
   d3.json("/dashboard/translate/nvd3.json", function(json, error) {
     if (error) return console.warn(error);
@@ -71,7 +73,13 @@ nv.addGraph(function() {
         .rotateLabels(-8)
 	      .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
 
-    // TODO: Optionally enable log scales
+    
+    if (logyAxis) {
+        chart.lines.yScale(d3.scale.log());
+        chart.yAxis.tickValues([1,10,100,1000,10000,1000000]);
+        chart.forceY([1,1000000]);
+    }
+
 	  chart.yAxis
 	      .tickFormat(d3.format(',.2f'));
 	  chart.y2Axis
