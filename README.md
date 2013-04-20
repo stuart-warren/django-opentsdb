@@ -3,6 +3,7 @@ django-opentsdb
 
 Django site to play with as a nicer front end to OpenTSDB. Uses NVD3.js graphs
 
+Install django 1.4.3 [https://docs.djangoproject.com/en/1.4/intro/install/]
 ```
 cd opentsdb_dashboard/
 python manage.py runserver
