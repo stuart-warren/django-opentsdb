@@ -53,8 +53,8 @@ svg {
 nv.addGraph(function() {
 
   var chart = nv.models.lineWithFocusChart()
-                .margin({top: 30, right: 30, bottom: 50, left: 60})
-                .margin2({top: 0, right: 30, bottom: 40, left: 60});
+                .margin({top: 30, right: 30, bottom: 50, left: 90})
+                .margin2({top: 0, right: 30, bottom: 40, left: 90});
   var data;
   // TODO: Use dynamic date formats depending on range of data?
   var dateFormat = '%a %d %b %Y %H:%M:%S';
@@ -67,10 +67,12 @@ nv.addGraph(function() {
     
     chart.xAxis
         .rotateLabels(-8)
+        .showMaxMin(false)
         .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
 
 	  chart.x2Axis
         .rotateLabels(-8)
+        .showMaxMin(false)
 	      .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
 
     
