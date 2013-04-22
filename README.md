@@ -17,3 +17,5 @@ To point to actual data, see dashboard/translate.py.
 Change url to one for opentsdb ascii data for metrics you want (may want to down-sample)
 
 ![load average graph using opentsdb data but generated with NVD3 library](https://raw.github.com/stuart-warren/django-opentsdb/master/docs/images/nvd3-load-2.png)
+
+See https://github.com/proofpoint/kairosdb for another alternative with nicer graphs and runs on cassandra rather than hbase
