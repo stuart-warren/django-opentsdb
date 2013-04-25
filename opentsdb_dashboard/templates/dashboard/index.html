@@ -33,7 +33,13 @@ svg {
 </style>
 <body>
  
- <h3>Be patient =]</h3>
+  <h3>Be patient =]</h3>
+  <div id="loading">
+    <div style="position: fixed; top: 40%; width: 100%;
+        font-size: 600%; text-align: center; z-index: 11;">loading...</div>
+    <div style="position: fixed; height: 100%; width: 100%;
+        z-index: 10; background-color: #c8ebf0; opacity: 0.3;"></div>
+  </div>
   <div id="chart">
     <svg style="height: 500px;"></svg>
   </div>
@@ -50,56 +56,73 @@ svg {
 <script>
 
 
-nv.addGraph(function() {
+var data;
+var chart = nv.models.lineWithFocusChart()
+                .margin({top: 30, right: 30, bottom: 50, left: 120})
+                .margin2({top: 0, right: 30, bottom: 40, left: 120});
+// TODO: Use dynamic date formats depending on range of data?
+var dateFormat = '%a %d %b %Y %H:%M:%S';
+var yFormat = ',.2f';
 
-  var chart = nv.models.lineWithFocusChart()
-                .margin({top: 30, right: 30, bottom: 50, left: 90})
-                .margin2({top: 0, right: 30, bottom: 40, left: 90});
-  var data;
-  // TODO: Use dynamic date formats depending on range of data?
-  var dateFormat = '%a %d %b %Y %H:%M:%S';
-  // Enable for log scale
-  var logyAxis = false
-  
+// Logarithmic Y axis settings
+var yLogValues = [1,10,100,1000,10000,1000000];
+var yLogMaxMin = [1,1000000];
+// Enable for log scale
+var yLogAxis = false;
+
+// Refresh every
+var refreshSecs = 30000;
+
+function redraw() {
   d3.json("/dashboard/translate/nvd3.json", function(json, error) {
     if (error) return console.warn(error);
     data = json;
-    
-    chart.xAxis
-        .rotateLabels(-8)
-        .showMaxMin(false)
-        .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
-
-	  chart.x2Axis
-        .rotateLabels(-8)
-        .showMaxMin(false)
-	      .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
-
-    
-    if (logyAxis) {
-        chart.lines.yScale(d3.scale.log());
-        chart.yAxis.tickValues([1,10,100,1000,10000,1000000]);
-        chart.forceY([1,1000000]);
-    }
-
-	  chart.yAxis
-	      .tickFormat(d3.format(',.2f'));
-	  chart.y2Axis
-	      .tickFormat(d3.format(',.2f'));
 
     d3.select('#chart svg')
-	      .datum(data)
-	    .transition().duration(500)
-	      .call(chart);
+        .datum(data)
+      .transition().duration(500)
+        .call(chart);
 
-  });	
+    document.getElementById("loading").style.display = 'none';
 
+  }); 
+
+}
+
+nv.addGraph(function() {
+  document.getElementById("loading").style.display = 'block';
+    
+  chart.xAxis
+      .rotateLabels(-8)
+      .showMaxMin(false)
+      .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
+
+  chart.x2Axis
+      .rotateLabels(-8)
+      .showMaxMin(false)
+      .tickFormat(function(d) { return d3.time.format(dateFormat)(new Date(d *1000)); })
+
+    
+  if (yLogAxis) {
+      chart.lines.yScale(d3.scale.log());
+      chart.yAxis.tickValues(yLogValues);
+      chart.forceY(yLogMaxMin);
+  }
+
+  chart.yAxis
+      .tickFormat(d3.format(yFormat));
+  chart.y2Axis
+      .tickFormat(d3.format(yFormat));
   
 
   nv.utils.windowResize(chart.update);
 
   return chart;
 });
+
+setInterval(function () {
+  redraw();
+}, refreshSecs);
 
 
 </script>
